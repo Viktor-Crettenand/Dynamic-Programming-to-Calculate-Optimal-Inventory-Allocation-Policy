@@ -43,6 +43,18 @@ chosen to be days, Ti is the number of days in the i th replenishment period, n 
 if it is positive, and the number of outstanding units ordered by premium class customers and
 m is the number of outstanding units ordered by base customers.
 The cost-to-go is calculated by using the following recursive functions:
+\begin{equation}
+    \begin{aligned}
+        V_i(t,n,m) & = \\
+        & \mathbb{E}_{\{(r_p, r_b) \sim r\}} [ \min \{  V_i(t+1, n-r_p, m+r_b) + h \cdot \max(0, n^\star) \\
+        & + c_p \cdot \max (0, -n^\star) + c_b \cdot m^\star, \\
+        & V_i(t+1, \hat{n}, \hat{m}) + h \cdot \max (0, \hat{n}) + c_p \max (0, -\hat{n}) + c_b \cdot \hat{m} \} ]
+        \label{equ:dynamic_programming}
+    \end{aligned}
+\end{equation}
+
+
+
 Vi (t , n, m) =
 E{(rp ,rb )∼r }[min{Vi (t + 1, n − rp , m + rb ) + h · max(0, n?)
 + cp · max(0, −n?) + cb · m?,
