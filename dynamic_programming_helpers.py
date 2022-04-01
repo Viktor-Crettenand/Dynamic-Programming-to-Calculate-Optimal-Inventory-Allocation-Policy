@@ -36,8 +36,6 @@ class DynamicProgram():
             raise ValueError('mode should be either standard or joint')
         self.num_n = max_n - self.min_n + 1
         self.num_m = int(max(self.r_b[:, 0]) * sum(self.T) + 1)
-
-
         self.memoized = [[[[None] * self.num_m for _ in range(self.num_n)] for _ in range(self.num_t)] for _ in range(self.num_i)] # nested list that stores the cost to go values
         self.memoized_decisions = [[[[None] * self.num_m for _ in range(self.num_n)] for _ in range(self.num_t)] for _ in range(self.num_i)] # nested list that stores the decisions (results of minimization problems in expectation2 and expectation_joint)
         if not (len(T) == len(Q) + 1):
@@ -45,6 +43,7 @@ class DynamicProgram():
             assert(len(T) == len(Q) + 1)
 
     def expectation_premium(self, i, t, n, m):
+        '''Calculates the cost to go for the premium demand'''
         temp = np.array([self.V(i, t + 1, n - x, m) + self.h * max(0, n - x) + self.c_p * max(0, x - n) + self.c_b * m for x in self.r_p[:, 0]])
         # print('expectation1')
         # print(i,t,n,m)
@@ -53,6 +52,7 @@ class DynamicProgram():
         return np.dot(temp, self.r_p[:, 1])
 
     def expectation_base(self, i, t, n, m):
+        '''Calculates the cost to go for the base demand'''
         temp = np.array([min(self.V(i, t+1, n, m + x) + self.h * max(0, n) + self.c_b * (m + x) + self.c_p * max(0, -n), \
             self.V(i, t+1, max(0, n - x) if n > 0 else n, m + (max(0, x - n) if n > 0 else x)) + self.h * max(0, n - x) + self.c_b * (m + (max(0, x - n) if n >= 0 else x)) + self.c_p * max(0, -n))  for x in self.r_b[:, 0]])
         fulfill_boolean = np.array([bool(np.argmin([self.V(i, t+1, n, m + x) + self.h * max(0, n) + self.c_b * (m + x) + self.c_p * max(0, -n), \
