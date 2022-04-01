@@ -43,54 +43,25 @@ chosen to be days, Ti is the number of days in the i th replenishment period, n 
 if it is positive, and the number of outstanding units ordered by premium class customers and
 m is the number of outstanding units ordered by base customers.
 The cost-to-go is calculated by using the following recursive functions:
-\begin{equation}
-    \begin{aligned}
-        V_i(t,n,m) & = \\
-        & \mathbb{E}_{\{(r_p, r_b) \sim r\}} [ \min \{  V_i(t+1, n-r_p, m+r_b) + h \cdot \max(0, n^\star) \\
-        & + c_p \cdot \max (0, -n^\star) + c_b \cdot m^\star, \\
-        & V_i(t+1, \hat{n}, \hat{m}) + h \cdot \max (0, \hat{n}) + c_p \max (0, -\hat{n}) + c_b \cdot \hat{m} \} ]
-        \label{equ:dynamic_programming}
-    \end{aligned}
-\end{equation}
 
+![image](https://user-images.githubusercontent.com/56121696/161269006-0dea4bfb-7e73-4f91-a402-6555eb42bda9.png)
 
-
-Vi (t , n, m) =
-E{(rp ,rb )∼r }[min{Vi (t + 1, n − rp , m + rb ) + h · max(0, n?)
-+ cp · max(0, −n?) + cb · m?,
-Vi (t + 1, ˆn, ˆm) + h · max(0, ˆn) + cp max(0, − ˆn) + cb · ˆm}]
-(5.1)
 where E{(rp ,rb )∼r } denotes the expectation over the joint distribution r of the random demands
 rp and rb , h is the daily holding cost and cp and cb are the penalties per unit of inventory and
 per day of delay for premium class and base class respectively. ˆn, ˆm, n? and m? are define by:
-ˆn =
-
-
-
-max{0, n − rp − rb }, if n − rp > 0
-n − rp , otherwise (5.2)
-ˆm = m+
-
-
-
-max{0, rb + rp − n}, if n − rp > 0
-rb , otherwise (5.3)
-n? = n − rp (5.4)
-m? = m + rb (5.5)
-The equation to calculate the cost-to-go on the last day of each replenishment period, is the
-34
-5.3. Results
-following:
-Vi (Ti , n, m) =
-
-
-
-Vi +1(1, n +Qi , m) if n +Qi ≤ 0
-Vi +1(1, max(0, n +Qi − m), max(0, m − n −Qi )), otherwise (5.6)
+
+![image](https://user-images.githubusercontent.com/56121696/161269082-ed117cfa-2650-44a2-a25a-cde84e959848.png)
+
+The equation to calculate the cost-to-go on the last day of each replenishment period, is the following:
+
+![image](https://user-images.githubusercontent.com/56121696/161269218-b05e9c32-0925-4efd-a749-e291082600de.png)
+
 where Qi is the replenishment quantity arriving at the end of period i .
 The equation to calculate the cost-to-go on the last day of the last replenishment period, is the
 following:
-VI (TI , n, m) = ps · max(0, −n + m) + s · max(0, n − m) (5.7)
+
+![image](https://user-images.githubusercontent.com/56121696/161269308-9b45b68e-7599-43a9-b3c9-a10f0b691af4.png)
+
 where ps is the penalty for not having delivered a unit at the end of the last period and s is the
 salvage value per unit.
 The optimal rationing policy will be compared against a myopic prioritization policy which
